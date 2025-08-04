@@ -31,11 +31,12 @@ for n in d:
         bar += 1
     elif bar == 1:
         m.append(n)
-m[0] == m[0]*10
+m[0] = m[0]*10
 bar == sum(m)
 if bar == 8:
     print("Es agosto")
 else:
     print("No es agosto")
+
 
     
