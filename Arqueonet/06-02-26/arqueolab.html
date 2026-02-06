@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ArqueoLab - Registro Digital</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body { background-color: #f4f7f4; }
+        .lab-nav { background: #2e7d32; color: white; padding: 20px 5%; display: flex; justify-content: space-between; align-items: center; }
+        .lab-nav a { color: white; text-decoration: none; font-weight: bold; }
+        
+        .stats-bar { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin: 30px 5%; }
+        .stat-card { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); border-left: 5px solid #2e7d32; }
+        .stat-card h3 { font-size: 0.8rem; color: #666; text-transform: uppercase; }
+        .stat-card p { font-size: 1.5rem; font-weight: bold; color: #333; }
+
+        .table-section { margin: 0 5% 50px 5%; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        .table-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+
+    <nav class="lab-nav">
+        <div><strong>🧪 ArqueoLab</strong> | Panel de Yacimiento</div>
+        <a href="index.html">← Volver al Hub Central</a>
+    </nav>
+
+    <main>
+        <section class="stats-bar">
+            <div class="stat-card">
+                <h3>Hallazgos hoy</h3>
+                <p>12 piezas</p>
+            </div>
+            <div class="stat-card">
+                <h3>Escaneos IA</h3>
+                <p>85% precisión</p>
+            </div>
+            <div class="stat-card">
+                <h3>Ubicación</h3>
+                <p>Sector B - Nivel 4</p>
+            </div>
+            <div class="stat-card">
+                <h3>Estado Informe</h3>
+                <p style="color: #ef6c00;">Generando...</p>
+            </div>
+        </section>
+
+        <section class="table-section">
+            <div class="table-header">
+                <h2>Hallazgos Recientes</h2>
+                <button class="btn-visit" onclick="toggleForm()" style="background: #2e7d32; color: white;">+ Nuevo Registro IA</button>
+            </div>
+            
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>ID Hallazgo</th>
+                        <th>Pieza</th>
+                        <th>Yacimiento</th>
+                        <th>Época</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>#2024-V-01</td>
+                        <td><strong>Vaso Campaniforme</strong><br><small style="color:#999">Cerámica decorada</small></td>
+                        <td>Los Millares</td>
+                        <td>Calcolítico</td>
+                        <td><span class="badge-status status-dig">Digitalizado</span></td>
+                        <td class="actions-cell">
+                            <a href="#" class="btn-action-round" title="Foto">🖼️</a>
+                            <a href="#" class="btn-action-round" title="Ficha">📄</a>
+                            <a href="#" class="btn-action-round" title="3D">🌐</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>#2024-R-12</td>
+                        <td><strong>Denario de Plata</strong><br><small style="color:#999">Moneda imperial</small></td>
+                        <td>Villa El Ruedo</td>
+                        <td>Romano</td>
+                        <td><span class="badge-status status-rev">En revisión</span></td>
+                        <td class="actions-cell">
+                            <a href="javascript:void(0)" class="btn-action-round" 
+                                onclick="verFicha('Vaso Campaniforme', 'https://images.unsplash.com/photo-1518114056416-8db323267591?auto=format&fit=crop&w=400', 'https://es.wikipedia.org/wiki/Cultura_del_vaso_campaniforme')">
+                                🖼️
+                            </a>
+                            <a href="#" class="btn-action-round" title="Ficha">📄</a>
+                            <a href="#" class="btn-action-round" title="3D">🌐</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        <section id="form-registro" class="table-section" style="display: none; border-top: 5px solid #2e7d32;">
+            <h2>📝 Nuevo Registro de Hallazgo</h2>
+            <br>
+            <form id="nuevo-hallazgo">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div>
+                        <label>ID Hallazgo:</label><br>
+                        <input type="text" id="id-pieza" placeholder="Ej: #2026-A-01" required style="width:100%; padding:8px; margin-top:5px;">
+                    </div>
+                    <div>
+                        <label>Nombre de la Pieza:</label><br>
+                        <input type="text" id="nombre-pieza" placeholder="Ej: Punta de flecha" required style="width:100%; padding:8px; margin-top:5px;">
+                    </div>
+                    <div>
+                        <label>Yacimiento:</label><br>
+                        <input type="text" id="yacimiento" placeholder="Nombre del sitio" required style="width:100%; padding:8px; margin-top:5px;">
+                    </div>
+                    <div>
+                        <label>Época:</label><br>
+                        <select id="epoca" style="width:100%; padding:8px; margin-top:5px;">
+                            <option>Prehistoria</option>
+                            <option>Romano</option>
+                            <option>Medieval</option>
+                            <option>Moderno</option>
+                        </select>
+                    </div>
+                </div>
+                <br>
+                <button type="submit" class="btn-visit" style="background: #2e7d32; color: white; border:none; width:100%;">Guardar en ArqueoNet</button>
+                <button type="button" onclick="toggleForm()" style="background: none; border:none; color: red; cursor:pointer; width:100%; margin-top:10px;">Cancelar</button>
+            </form>
+        </section>
+    </main>
+<script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-database-compat.js"></script>
+
+<script>
+    // Configuración de tu proyecto (Verificada)
+    const firebaseConfig = {
+      apiKey: "AIzaSyAX6JC38Ny-WenJr6W_72T006sjtOIIvvA",
+      authDomain: "arqueonet-eb652.firebaseapp.com",
+      projectId: "arqueonet-eb652",
+      storageBucket: "arqueonet-eb652.firebasestorage.app",
+      messagingSenderId: "809253461937",
+      appId: "1:809253461937:web:0283515c6b80ad4c546790",
+      measurementId: "G-E1C641K3NZ"
+    };
+
+    // Inicializar Firebase
+    firebase.initializeApp(firebaseConfig);
+    const database = firebase.database();
+    const hallazgosRef = database.ref('hallazgos');
+
+    // FUNCIÓN A: Escuchar la base de datos (Esto hace que aparezcan las cosas)
+    hallazgosRef.on('child_added', (snapshot) => {
+        const data = snapshot.val();
+        const tabla = document.querySelector('.data-table tbody');
+        const nuevaFila = document.createElement('tr');
+
+        nuevaFila.innerHTML = `
+            <td>${data.id}</td>
+            <td><strong>${data.nombre}</strong><br><small style="color:#999">Sincronizado Cloud</small></td>
+            <td>${data.yacimiento}</td>
+            <td>${data.epoca}</td>
+            <td><span class="badge-status status-dig">Digitalizado</span></td>
+            <td class="actions-cell">
+                <a href="javascript:void(0)" class="btn-action-round" onclick="verFicha('${data.nombre}', 'https://images.unsplash.com/photo-1518114056416-8db323267591?auto=format&fit=crop&w=400', '#')">🖼️</a>
+                <a href="#" class="btn-action-round">📄</a>
+                <a href="#" class="btn-action-round">🌐</a>
+            </td>
+        `;
+        tabla.prepend(nuevaFila); // Inserta el hallazgo arriba de todo
+    });
+
+    // FUNCIÓN B: Guardar en la nube (El botón de enviar)
+    document.getElementById('nuevo-hallazgo').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const idVal = document.getElementById('id-pieza').value;
+        const nombreVal = document.getElementById('nombre-pieza').value;
+        const yacVal = document.getElementById('yacimiento').value;
+        const epocaVal = document.getElementById('epoca').value;
+
+        // Enviamos el objeto a Firebase
+        hallazgosRef.push({
+            id: idVal,
+            nombre: nombreVal,
+            yacimiento: yacVal,
+            epoca: epocaVal
+        }).then(() => {
+            this.reset(); // Limpia el formulario
+            toggleForm(); // Lo cierra
+        }).catch((error) => {
+            alert("Error al conectar con la base de datos: " + error.message);
+        });
+    });
+
+    // Funciones de Interfaz (No las borres)
+    function toggleForm() {
+        const form = document.getElementById('form-registro');
+        form.style.display = (form.style.display === 'none' || form.style.display === '') ? 'block' : 'none';
+        if(form.style.display === 'block') form.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function verFicha(nombre, imagen, webReferencia) {
+        const modal = document.getElementById('modal-detalle');
+        const body = document.getElementById('modal-body');
+        body.innerHTML = `
+            <h2>Detalles: ${nombre}</h2>
+            <div class="ficha-grid">
+                <img src="${imagen}" class="ficha-img">
+                <div>
+                    <p><strong>Referencia:</strong> <a href="${webReferencia}" target="_blank">Catálogo</a></p>
+                    <ul class="document-list"><li>📄 Informe_IA.pdf</li></ul>
+                </div>
+            </div>`;
+        modal.style.display = "block";
+    }
+
+    function cerrarModal() { document.getElementById('modal-detalle').style.display = "none"; }
+</script>
+    <div id="modal-detalle" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="cerrarModal()">&times;</span>
+            <div id="modal-body">
+        </div>
+    </div>
+</div>
+</body>
+</html>
