@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ArqueoLab - Registro Digital</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body { background-color: #f4f7f4; }
+        .lab-nav { background: #2e7d32; color: white; padding: 20px 5%; display: flex; justify-content: space-between; align-items: center; }
+        .lab-nav a { color: white; text-decoration: none; font-weight: bold; }
+        
+        .stats-bar { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin: 30px 5%; }
+        .stat-card { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); border-left: 5px solid #2e7d32; }
+        .stat-card h3 { font-size: 0.8rem; color: #666; text-transform: uppercase; }
+        .stat-card p { font-size: 1.5rem; font-weight: bold; color: #333; }
+
+        .table-section { margin: 0 5% 50px 5%; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        .table-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+
+    <nav class="lab-nav">
+        <div><strong>🧪 ArqueoLab</strong> | Panel de Yacimiento</div>
+        <a href="index.html">← Volver al Hub Central</a>
+    </nav>
+
+    <main>
+        <section class="stats-bar">
+            <div class="stat-card">
+                <h3>Hallazgos hoy</h3>
+                <p>12 piezas</p>
+            </div>
+            <div class="stat-card">
+                <h3>Escaneos IA</h3>
+                <p>85% precisión</p>
+            </div>
+            <div class="stat-card">
+                <h3>Ubicación</h3>
+                <p>Sector B - Nivel 4</p>
+            </div>
+            <div class="stat-card">
+                <h3>Estado Informe</h3>
+                <p style="color: #ef6c00;">Generando...</p>
+            </div>
+        </section>
+
+        <section class="table-section">
+            <div class="table-header">
+                <h2>Hallazgos Recientes</h2>
+                <button class="btn-visit" onclick="toggleForm()" style="background: #2e7d32; color: white;">+ Nuevo Registro IA</button>
+            </div>
+            
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>ID Hallazgo</th>
+                        <th>Pieza</th>
+                        <th>Yacimiento</th>
+                        <th>Época</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>#2024-V-01</td>
+                        <td><strong>Vaso Campaniforme</strong><br><small style="color:#999">Cerámica decorada</small></td>
+                        <td>Los Millares</td>
+                        <td>Calcolítico</td>
+                        <td><span class="badge-status status-dig">Digitalizado</span></td>
+                        <td class="actions-cell">
+                            <a href="#" class="btn-action-round" title="Foto">🖼️</a>
+                            <a href="#" class="btn-action-round" title="Ficha">📄</a>
+                            <a href="#" class="btn-action-round" title="3D">🌐</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>#2024-R-12</td>
+                        <td><strong>Denario de Plata</strong><br><small style="color:#999">Moneda imperial</small></td>
+                        <td>Villa El Ruedo</td>
+                        <td>Romano</td>
+                        <td><span class="badge-status status-rev">En revisión</span></td>
+                        <td class="actions-cell">
+                            <a href="javascript:void(0)" class="btn-action-round" 
+                                onclick="verFicha('Vaso Campaniforme', 'https://images.unsplash.com/photo-1518114056416-8db323267591?auto=format&fit=crop&w=400', 'https://es.wikipedia.org/wiki/Cultura_del_vaso_campaniforme')">
+                                🖼️
+                            </a>
+                            <a href="#" class="btn-action-round" title="Ficha">📄</a>
+                            <a href="#" class="btn-action-round" title="3D">🌐</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        <section id="form-registro" class="table-section" style="display: none; border-top: 5px solid #2e7d32;">
+            <h2>📝 Nuevo Registro de Hallazgo</h2>
+            <br>
+            <form id="nuevo-hallazgo">
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px;">
+                    <div>
+                        <label>ID Hallazgo:</label>
+                        <input type="text" id="id-pieza" placeholder="Ej: #2026-A-01" required style="width:100%; padding:8px; margin-top:5px;">
+                    </div>
+                    <div>
+                        <label>Nombre de la Pieza:</label>
+                        <input type="text" id="nombre-pieza" placeholder="Ej: Punta de flecha" required style="width:100%; padding:8px; margin-top:5px;">
+                    </div>
+                    <div>
+                        <label>Yacimiento:</label>
+                        <input type="text" id="yacimiento" placeholder="Nombre del sitio" required style="width:100%; padding:8px; margin-top:5px;">
+                    </div>
+
+                    <div>
+                        <label>Unidad Estratigráfica (UE):</label>
+                        <input type="text" id="ue-capa" placeholder="Ej: UE 104" required style="width:100%; padding:8px; margin-top:5px;">
+                    </div>
+                    <div>
+                        <label>Material:</label>
+                        <input type="text" id="material" placeholder="Ej: Sílex, Bronce..." style="width:100%; padding:8px; margin-top:5px;">
+                    </div>
+                    <div>
+                        <label>Época:</label>
+                        <select id="epoca" style="width:100%; padding:8px; margin-top:5px;">
+                            <option>Prehistoria</option>
+                            <option>Romano</option>
+                            <option>Medieval</option>
+                            <option>Moderno</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label>Dimensiones (mm):</label>
+                        <input type="text" id="dimensiones" placeholder="L x A x G" style="width:100%; padding:8px; margin-top:5px;">
+                    </div>
+                    <div style="grid-column: span 2;">
+                        <label>Estado de Conservación:</label>
+                        <select id="conservacion" style="width:100%; padding:8px; margin-top:5px;">
+                            <option>Excelente (Completo)</option>
+                            <option>Bueno (Fragmentado)</option>
+                            <option>Regular (Requiere Limpieza)</option>
+                            <option>Urgente (Riesgo de degradación)</option>
+                        </select>
+                    </div>
+                </div>
+                <br>
+                <button type="submit" class="btn-visit" style="background: #2e7d32; color: white; border:none; width:100%;">Guardar Registro Científico</button>
+                <button type="button" onclick="toggleForm()" style="background: none; border:none; color: red; cursor:pointer; width:100%; margin-top:10px;">Cancelar</button>
+            </form>
+        </section>
+    </main>
+
+<script>
+    // 1. Función para mostrar/ocultar el formulario
+    function toggleForm() {
+        const form = document.getElementById('form-registro');
+        if (form.style.display === 'none' || form.style.display === '') {
+            form.style.display = 'block';
+            form.scrollIntoView({ behavior: 'smooth' });
+        } else {
+            form.style.display = 'none';
+        }
+    }
+
+    // 2. Lógica de guardado local (Solo para esta sesión)
+    document.getElementById('nuevo-hallazgo').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        // Capturar todos los nuevos datos
+        const datos = {
+            id: document.getElementById('id-pieza').value,
+            nombre: document.getElementById('nombre-pieza').value,
+            yacimiento: document.getElementById('yacimiento').value,
+            ue: document.getElementById('ue-capa').value,
+            material: document.getElementById('material').value,
+            epoca: document.getElementById('epoca').value,
+            dimensiones: document.getElementById('dimensiones').value,
+            conservacion: document.getElementById('conservacion').value
+        };
+
+        const tabla = document.querySelector('.data-table tbody');
+        const nuevaFila = document.createElement('tr');
+
+        // La tabla principal sigue mostrando lo básico para no saturar
+        nuevaFila.innerHTML = `
+            <td>${datos.id}</td>
+            <td><strong>${datos.nombre}</strong><br><small style="color:#999">UE: ${datos.ue}</small></td>
+            <td>${datos.yacimiento}</td>
+            <td>${datos.epoca}</td>
+            <td><span class="badge-status status-dig">Digitalizado</span></td>
+            <td class="actions-cell">
+                <a href="javascript:void(0)" class="btn-action-round" 
+                onclick="verFichaCompleta('${datos.nombre}', '${datos.material}', '${datos.ue}', '${datos.dimensiones}', '${datos.conservacion}')">
+                🖼️
+                </a>
+                <a href="#" class="btn-action-round">📄</a>
+                <a href="#" class="btn-action-round">🌐</a>
+            </td>
+        `;
+
+        tabla.prepend(nuevaFila);
+        this.reset();
+        toggleForm();
+    });
+
+    // Nueva función para ver la ficha con todos los detalles técnicos
+    function verFichaCompleta(nombre, material, ue, dim, estado) {
+        const modal = document.getElementById('modal-detalle');
+        const body = document.getElementById('modal-body');
+
+        body.innerHTML = `
+            <h2>Ficha Técnica: ${nombre}</h2>
+            <div class="ficha-grid">
+                <div>
+                    <img src="https://images.unsplash.com/photo-1518114056416-8db323267591?auto=format&fit=crop&w=400" class="ficha-img">
+                    <p style="margin-top:10px; font-size:0.9rem; color:#666; text-align:center;">Fotogrametría automática ArqueoLab IA</p>
+                </div>
+                <div>
+                    <h3 style="color:#2e7d32; border-bottom:1px solid #eee; padding-bottom:5px;">Contexto del Hallazgo</h3>
+                    <p><strong>Unidad Estratigráfica:</strong> ${ue}</p>
+                    <p><strong>Material predominante:</strong> ${material}</p>
+                    <p><strong>Dimensiones:</strong> ${dim} mm</p>
+                    <p><strong>Estado:</strong> ${estado}</p>
+                    
+                    <h3 style="color:#2e7d32; border-bottom:1px solid #eee; padding-bottom:5px; margin-top:15px;">Documentación</h3>
+                    <ul class="document-list" style="list-style:none; padding:0;">
+                        <li style="background:#f9f9f9; padding:8px; margin-bottom:5px; border-radius:5px;">📄 Registro_UE_${ue}.pdf</li>
+                        <li style="background:#f9f9f9; padding:8px; border-radius:5px;">📊 Analisis_Material.csv</li>
+                    </ul>
+                </div>
+            </div>
+        `;
+        modal.style.display = "block";
+    }
+
+    // 3. Funciones del Modal (Ficha)
+    function verFicha(nombre, imagen, webReferencia) {
+        const modal = document.getElementById('modal-detalle');
+        const body = document.getElementById('modal-body');
+
+        body.innerHTML = `
+            <h2>Ficha de Hallazgo: ${nombre}</h2>
+            <div class="ficha-grid">
+                <div>
+                    <img src="${imagen}" class="ficha-img" style="width:100%; border-radius:10px;">
+                </div>
+                <div>
+                    <h3>Datos Técnicos</h3>
+                    <p>Referencia: <a href="${webReferencia}" target="_blank">Enlace Externo</a></p>
+                    <ul class="document-list" style="margin-top:10px; list-style:none; padding:0;">
+                        <li style="background:#f0f0f0; padding:8px; margin-bottom:5px; border-radius:5px;">📄 Informe_Tecnico.pdf</li>
+                        <li style="background:#f0f0f0; padding:8px; border-radius:5px;">📊 Grafica_Materiales.csv</li>
+                    </ul>
+                </div>
+            </div>
+        `;
+        modal.style.display = "block";
+    }
+
+    function cerrarModal() {
+        document.getElementById('modal-detalle').style.display = "none";
+    }
+
+    window.onclick = function(event) {
+        const modal = document.getElementById('modal-detalle');
+        if (event.target == modal) cerrarModal();
+    }
+</script>
+    <div id="modal-detalle" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="cerrarModal()">&times;</span>
+            <div id="modal-body">
+        </div>
+    </div>
+</div>
+</body>
+</html>
