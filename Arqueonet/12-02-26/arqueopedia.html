@@ -38,6 +38,14 @@
         <p style="color: #aaa;">Colección digital de alta precisión de los hallazgos de ArqueoNet.</p>
     </header>
 
+    <section style="margin: 0 5% 20px 5%;">
+        <div style="position: relative; display: flex; align-items: center;">
+            <span style="position: absolute; left: 15px; color: #888;">🔍</span>
+            <input type="text" id="pedia-search" placeholder="Buscar por nombre, material o cultura..." 
+                style="width: 100%; padding: 15px 15px 15px 45px; border-radius: 30px; border: 1px solid #333; background: #262626; color: white; outline: none; transition: 0.3s;">
+        </div>
+    </section>
+    
     <section class="filter-bar">
         <button class="filter-btn active">Todos</button>
         <button class="filter-btn">Prehistoria</button>
@@ -45,18 +53,128 @@
         <button class="filter-btn">Medieval</button>
     </section>
 
+    <div id="no-results" style="display: none; grid-column: 1 / -1; text-align: center; padding: 50px; color: #666;">
+        <span style="font-size: 3rem; display: block; margin-bottom: 20px;">🕵️‍♂️</span>
+        <h3>No se han encontrado piezas en los archivos</h3>
+        <p>Prueba con otros términos o cambia la época en los filtros.</p>
+    </div>
+
     <main class="museum-grid">
-        <div class="artifact-card">
-            <img src="https://images.unsplash.com/photo-1518114056416-8db323267591?auto=format&fit=crop&w=600" class="artifact-img" alt="Vaso Campaniforme">
+        <div class="artifact-card" data-epoca="Prehistoria">
+            <div class="artifact-badge" style="position: absolute; top: 15px; right: 15px; background: rgba(13, 71, 161, 0.8); padding: 5px 12px; border-radius: 15px; font-size: 0.7rem;">Prehistoria</div>
+            <img src="https://images.unsplash.com/photo-1623157530704-20398f680584?auto=format&fit=crop&w=600" class="artifact-img" alt="Cerámica prehistórica">
             <div class="artifact-info">
-                <span class="artifact-tag">Calcolítico</span>
-                <h3 style="margin: 5px 0;">Vaso Campaniforme</h3>
-                <p style="color: #888; font-size: 0.9rem;">Cerámica con decoración incisa recuperada en Los Millares.</p>
-                <button class="btn-3d">Iniciar Visor 3D 🌐</button>
+                <span class="artifact-tag">Cultura Los Millares</span>
+                <h3>Vaso Campaniforme</h3>
+                <p>Cerámica con decoración incisa característica del Calcolítico final.</p>
+                <button class="btn-3d" onclick="abrirVisor('Vaso Campaniforme', 'Cerámica', 'Decoración geométrica incisa.')">Analizar en 3D 🌐</button>
             </div>
         </div>
 
-        </main>
+        <div class="artifact-card" data-epoca="Roma">
+            <div class="artifact-badge" style="position: absolute; top: 15px; right: 15px; background: rgba(13, 71, 161, 0.8); padding: 5px 12px; border-radius: 15px; font-size: 0.7rem;">Roma</div>
+            <img src="https://images.unsplash.com/photo-1616423642774-60144d186f91?auto=format&fit=crop&w=600" class="artifact-img" alt="Moneda Romana">
+            <div class="artifact-info">
+                <span class="artifact-tag">Siglo I d.C.</span>
+                <h3>Denario de Plata</h3>
+                <p>Moneda imperial con la efigie de Augusto. Hallada en Villa El Ruedo.</p>
+                <button class="btn-3d" onclick="abrirVisor('Denario de Plata', 'Plata', 'Anverso con busto laureado.')">Analizar en 3D 🌐</button>
+            </div>
+        </div>
 
+        <div class="artifact-card" data-epoca="Medieval">
+            <div class="artifact-badge" style="position: absolute; top: 15px; right: 15px; background: rgba(13, 71, 161, 0.8); padding: 5px 12px; border-radius: 15px; font-size: 0.7rem;">Medieval</div>
+            <img src="https://images.unsplash.com/photo-1594914217154-20455855f750?auto=format&fit=crop&w=600" class="artifact-img" alt="Daga histórica">
+            <div class="artifact-info">
+                <span class="artifact-tag">Siglo XII</span>
+                <h3>Daga de Al-Ándalus</h3>
+                <p>Arma de acero damasquinado con restos de empuñadura en marfil.</p>
+                <button class="btn-3d" onclick="abrirVisor('Daga Medieval', 'Acero y Marfil', 'Inscripciones en caligrafía cúfica.')">Analizar en 3D 🌐</button>
+            </div>
+        </div>
+
+        <div class="artifact-card" data-epoca="Roma">
+            <div class="artifact-badge" style="position: absolute; top: 15px; right: 15px; background: rgba(13, 71, 161, 0.8); padding: 5px 12px; border-radius: 15px; font-size: 0.7rem;">Roma</div>
+            <img src="https://images.unsplash.com/photo-1554188248-986adbb73be4?auto=format&fit=crop&w=600" class="artifact-img" alt="Busto Romano">
+            <div class="artifact-info">
+                <span class="artifact-tag">Mármol de Carrara</span>
+                <h3>Busto de Patricio</h3>
+                <p>Retrato realista de un senador romano, conservando restos de policromía.</p>
+                <button class="btn-3d" onclick="abrirVisor('Busto Romano', 'Mármol', 'Escultura de bulto redondo del siglo II.')">Analizar en 3D 🌐</button>
+            </div>
+        </div>
+
+        <div class="artifact-card" data-epoca="Prehistoria">
+            <div class="artifact-badge" style="position: absolute; top: 15px; right: 15px; background: rgba(13, 71, 161, 0.8); padding: 5px 12px; border-radius: 15px; font-size: 0.7rem;">Prehistoria</div>
+            <img src="https://images.unsplash.com/photo-1628153325000-8809e6d78ecf?auto=format&fit=crop&w=600" class="artifact-img" alt="Hacha de sílex">
+            <div class="artifact-info">
+                <span class="artifact-tag">Paleolítico</span>
+                <h3>Bifaz de Sílex</h3>
+                <p>Herramienta tallada por ambas caras, pieza clave de la industria achelense.</p>
+                <button class="btn-3d" onclick="abrirVisor('Bifaz de Sílex', 'Piedra Sílex', 'Tallado manual por percusión directa.')">Analizar en 3D 🌐</button>
+            </div>
+        </div>
+
+        <div class="artifact-card" data-epoca="Medieval">
+            <div class="artifact-badge" style="position: absolute; top: 15px; right: 15px; background: rgba(13, 71, 161, 0.8); padding: 5px 12px; border-radius: 15px; font-size: 0.7rem;">Medieval</div>
+            <img src="https://images.unsplash.com/photo-1549413216-438997ca96a6?auto=format&fit=crop&w=600" class="artifact-img" alt="Azulejo artesano">
+            <div class="artifact-info">
+                <span class="artifact-tag">Siglo XIV</span>
+                <h3>Azulejo de Cuerda Seca</h3>
+                <p>Pieza arquitectónica con motivos florales y barniz vítreo azul cobalto.</p>
+                <button class="btn-3d" onclick="abrirVisor('Azulejo Medieval', 'Barro cocido', 'Técnica de cuerda seca cordobesa.')">Analizar en 3D 🌐</button>
+            </div>
+        </div>
+    </main>
+<script>
+    const searchInput = document.getElementById('pedia-search');
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const cards = document.querySelectorAll('.artifact-card');
+
+    function filtrarGaleria() {
+        const texto = searchInput.value.toLowerCase();
+        const filtroActivo = document.querySelector('.filter-btn.active').innerText;
+        let contadorVisibles = 0; // Nueva variable
+
+        cards.forEach(card => {
+            const nombre = card.querySelector('h3').innerText.toLowerCase();
+            const desc = card.querySelector('p').innerText.toLowerCase();
+            const tag = card.querySelector('.artifact-tag').innerText.toLowerCase();
+            const epoca = card.getAttribute('data-epoca');
+
+            const coincideTexto = nombre.includes(texto) || desc.includes(texto) || tag.includes(texto);
+            const coincideEpoca = (filtroActivo === "Todos" || epoca === filtroActivo);
+
+            if (coincideTexto && coincideEpoca) {
+                card.style.display = "block";
+                contadorVisibles++; // Sumamos si es visible
+            } else {
+                card.style.display = "none";
+            }
+        });
+
+        // Mostrar u ocultar el mensaje de "No hay resultados"
+        const noResults = document.getElementById('no-results');
+        noResults.style.display = (contadorVisibles === 0) ? "block" : "none";
+    }
+
+    // Evento para el buscador
+    searchInput.addEventListener('input', filtrarGaleria);
+
+    // Evento para los botones de filtro
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelector('.filter-btn.active').classList.remove('active');
+            btn.classList.add('active');
+            filtrarGaleria();
+        });
+    });
+
+    // Función del Visor (Asegúrate de tenerla para que no de error)
+    function abrirVisor(nombre, material, desc) {
+        alert("Iniciando escaneo 3D de: " + nombre + "\nMaterial: " + material);
+        // Aquí iría la lógica del modal que vimos antes
+    }
+</script>
 </body>
 </html>

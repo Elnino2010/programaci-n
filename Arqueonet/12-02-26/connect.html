@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ArqueoConnect - Comunidad Científica</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body { background-color: #f0f2f5; color: #333; }
+        .connect-nav { background: #1565c0; color: white; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; }
+        .connect-nav a { color: white; text-decoration: none; font-weight: bold; }
+
+        .connect-container { display: grid; grid-template-columns: 280px 1fr 300px; gap: 20px; padding: 20px 5%; max-width: 1400px; margin: 0 auto; }
+
+        /* Sidebar Perfil */
+        .profile-card { background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,0.1); position: sticky; top: 80px; }
+        .profile-header { background: #1565c0; height: 60px; }
+        .profile-avatar { width: 80px; height: 80px; border-radius: 50%; border: 4px solid white; margin: -40px auto 10px; display: block; background: #ddd; }
+        .profile-info { text-align: center; padding: 15px; }
+
+        /* Feed de Noticias */
+        .feed-post { background: white; border-radius: 10px; padding: 20px; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .post-header { display: flex; align-items: center; gap: 10px; margin-bottom: 15px; }
+        .user-img { width: 45px; height: 45px; border-radius: 50%; background: #eee; }
+        .post-content img { width: 100%; border-radius: 10px; margin: 15px 0; }
+        
+        .post-actions { display: flex; border-top: 1px solid #eee; padding-top: 15px; gap: 20px; }
+        .action-btn { background: none; border: none; color: #65676b; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 5px; }
+        .action-btn:hover { color: #1565c0; }
+
+        /* Tendencias */
+        .trends-card { background: white; border-radius: 10px; padding: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); position: sticky; top: 80px; }
+        .trend-item { margin-bottom: 15px; border-bottom: 1px solid #f0f2f5; padding-bottom: 5px; }
+        .trend-item small { color: #65676b; font-size: 0.75rem; }
+    </style>
+</head>
+<body>
+
+    <nav class="connect-nav">
+        <div><strong>🌐 ArqueoConnect</strong></div>
+        <a href="index.html">← Salir al Hub</a>
+    </nav>
+
+    <div class="connect-container">
+        <aside>
+            <div class="profile-card">
+                <div class="profile-header"></div>
+                <img src="https://i.pravatar.cc/150?u=arqueo" class="profile-avatar">
+                <div class="profile-info">
+                    <h3>Dr. Julián R.</h3>
+                    <p style="color: #65676b; font-size: 0.9rem;">Director de Excavación</p>
+                    <hr style="margin: 15px 0; border: 0; border-top: 1px solid #eee;">
+                    <div style="text-align: left; font-size: 0.85rem;">
+                        <p>📍 Yacimiento: Itálica</p>
+                        <p>🏺 Hallazgos validados: 124</p>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <main>
+            <div class="feed-post">
+                <div style="display: flex; gap: 10px;">
+                    <img src="https://i.pravatar.cc/150?u=arqueo" class="user-img">
+                    <input type="text" placeholder="¿Qué has descubierto hoy, Julián?" 
+                           style="flex: 1; border-radius: 25px; border: 1px solid #eee; padding: 0 20px; background: #f0f2f5;">
+                </div>
+            </div>
+
+            <div class="feed-post">
+                <div class="post-header">
+                    <img src="https://i.pravatar.cc/150?u=maria" class="user-img">
+                    <div>
+                        <h4 style="margin:0;">Dra. María López</h4>
+                        <small>Hace 2 horas • Proyecto ArqueoNet</small>
+                    </div>
+                </div>
+                <div class="post-content">
+                    <p>¡Increíble hallazgo in situ! Acabamos de extraer una lucerna romana casi intacta en el Sector B. La estratigrafía confirma que pertenece a la UE 203. ¿Alguien reconoce este sello de alfarero?</p>
+                    <img src="https://images.unsplash.com/photo-1599599810694-b5b37304c041?auto=format&fit=crop&w=800" alt="Lucerna romana">
+                </div>
+                <div class="post-actions">
+                    <button class="action-btn">✅ Validar Hallazgo</button>
+                    <button class="action-btn">💬 Comentar</button>
+                    <button class="action-btn">🔗 Compartir</button>
+                </div>
+            </div>
+        </main>
+
+        <aside>
+            <div class="trends-card">
+                <h3>Tendencias #</h3>
+                <div class="trend-item">
+                    <small>Campañas actuales</small>
+                    <p><strong>#ExcavacionItalica2026</strong></p>
+                </div>
+                <div class="trend-item">
+                    <small>Top Temas</small>
+                    <p><strong>#CeramicaSigillata</strong></p>
+                </div>
+                <div class="trend-item">
+                    <small>IA en Arqueología</small>
+                    <p><strong>#FotogrametriaPro</strong></p>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+</body>
+</html>
