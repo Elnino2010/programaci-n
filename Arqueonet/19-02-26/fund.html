@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ArqueoFund - Crowdfunding Científico</title>
+    <style>
+        :root {
+            --gold: #f59e0b;
+            --blue: #3b82f6;
+            --dark: #0f172a;
+            --bg: #f8fafc;
+        }
+
+        body { font-family: 'Inter', sans-serif; background: var(--bg); margin: 0; overflow-x: hidden; color: var(--dark); }
+
+        /* Contenedor de Historias Estilo Instagram */
+        .stories-wrapper {
+            background: white;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 20px 0;
+        }
+
+        .stories-container {
+            display: flex;
+            gap: 25px;
+            padding: 0 5%;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+        .stories-container::-webkit-scrollbar { display: none; }
+
+        .story {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 95px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .story:hover { transform: scale(1.08); }
+
+        .progress-circle {
+            width: 85px;
+            height: 85px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background: conic-gradient(var(--gold) var(--p), #e2e8f0 0deg);
+            padding: 4px;
+        }
+
+        .story-img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid white;
+        }
+
+        .story-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        .project-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 23, 42, 0.95);
+            z-index: 2000;
+            display: none;
+            align-items: center; justify-content: center;
+            backdrop-filter: blur(8px);
+        }
+
+        .project-card {
+            background: white;
+            width: 90%;
+            max-width: 450px;
+            border-radius: 24px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+        }
+
+        .project-info { padding: 30px; }
+        
+        .fund-bar-total { background: #f1f5f9; height: 12px; border-radius: 6px; margin: 20px 0 10px; }
+        .fund-bar-fill { background: var(--gold); height: 100%; border-radius: 6px; width: 0%; transition: width 1s cubic-bezier(0.17, 0.67, 0.83, 0.67); }
+
+        .donate-btn {
+            width: 100%; padding: 18px; background: var(--dark); color: white;
+            border: none; border-radius: 14px; font-weight: bold; cursor: pointer;
+            margin-top: 20px; font-size: 1rem;
+        }
+
+        .close-btn {
+            position: absolute; top: 15px; right: 15px; background: white;
+            border: none; width: 35px; height: 35px; border-radius: 50%;
+            font-weight: bold; cursor: pointer; z-index: 10;
+        }
+    </style>
+</head>
+<body>
+
+    <nav style="background: var(--dark); color: white; padding: 20px 5%; display: flex; justify-content: space-between; align-items: center;">
+        <div style="font-weight: 900; letter-spacing: 1px;">🏛️ ARQUEOFUND</div>
+        <a href="index.html" style="color: white; text-decoration: none; font-size: 0.85rem; font-weight: 600; border: 1px solid rgba(255,255,255,0.3); padding: 8px 15px; border-radius: 20px;">← Volver al Hub</a>
+    </nav>
+
+    <div class="stories-wrapper">
+        <div class="stories-container">
+            <div class="story" onclick="openProject('Misión Itálica', 'Excavación de las termas imperiales.', 1000000, 250000, 'https://images.unsplash.com/photo-1549413216-438997ca96a6?auto=format&fit=crop&w=600')">
+                <div class="progress-circle" style="--p: 90deg;">
+                    <img src="https://images.unsplash.com/photo-1549413216-438997ca96a6?auto=format&fit=crop&w=600" class="story-img">
+                </div>
+                <span class="story-label">Itálica 2026</span>
+            </div>
+
+            <div class="story" onclick="openProject('Saqqara Scan', 'Escaneo láser de la pirámide escalonada.', 500000, 300000, 'https://images.unsplash.com/photo-1503177119275-0aa32b3a9368?auto=format&fit=crop&w=600')">
+                <div class="progress-circle" style="--p: 216deg;">
+                    <img src="https://images.unsplash.com/photo-1503177119275-0aa32b3a9368?auto=format&fit=crop&w=600" class="story-img">
+                </div>
+                <span class="story-label">Egipto 3D</span>
+            </div>
+
+            <div class="story" onclick="openProject('Titanes de Atapuerca', 'Recuperación de restos de microfauna.', 150000, 127500, 'https://images.unsplash.com/photo-1506452305024-9d3f02d1c9b6?auto=format&fit=crop&w=600')">
+                <div class="progress-circle" style="--p: 306deg;">
+                    <img src="https://images.unsplash.com/photo-1506452305024-9d3f02d1c9b6?auto=format&fit=crop&w=600" class="story-img">
+                </div>
+                <span class="story-label">Atapuerca</span>
+            </div>
+
+            <div class="story" onclick="openProject('Pecio de Alborán', 'Recuperación de ánforas fenicias.', 300000, 30000, 'https://images.unsplash.com/photo-1628153325000-8809e6d78ecf?auto=format&fit=crop&w=600')">
+                <div class="progress-circle" style="--p: 36deg;">
+                    <img src="https://images.unsplash.com/photo-1628153325000-8809e6d78ecf?auto=format&fit=crop&w=600" class="story-img">
+                </div>
+                <span class="story-label">Submarina</span>
+            </div>
+
+            <div class="story" onclick="openProject('Mosaicos Olvidados', 'Consolidación de la Villa Romana de Noheda.', 80000, 36000, 'https://images.unsplash.com/photo-1615880484746-a134be9a6ecf?auto=format&fit=crop&w=600')">
+                <div class="progress-circle" style="--p: 162deg;">
+                    <img src="https://images.unsplash.com/photo-1615880484746-a134be9a6ecf?auto=format&fit=crop&w=600" class="story-img">
+                </div>
+                <span class="story-label">Mosaicos</span>
+            </div>
+        </div>
+    </div>
+
+    <main style="padding: 60px 5%; text-align: center; max-width: 800px; margin: 0 auto;">
+        <h1>Financia el descubrimiento del mañana</h1>
+        <p style="color: #64748b;">Pulsa en las historias de los proyectos para ver los detalles y colaborar.</p>
+    </main>
+
+    <div id="projectOverlay" class="project-overlay" onclick="closeProject(event)">
+        <div class="project-card" onclick="event.stopPropagation()">
+            <button class="close-btn" onclick="document.getElementById('projectOverlay').style.display='none'">✕</button>
+            <img id="modalImg" src="" style="width: 100%; height: 280px; object-fit: cover;">
+            <div class="project-info">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span id="modalPercent" style="color: var(--gold); font-weight: 900; font-size: 1.2rem;">0%</span>
+                    <span style="background: #dcfce7; color: #166534; padding: 4px 12px; border-radius: 20px; font-size: 0.7rem; font-weight: 800;">VERIFICADO</span>
+                </div>
+                <h2 id="modalTitle" style="margin: 15px 0 10px;"></h2>
+                <p id="modalDesc" style="color: #64748b; font-size: 0.95rem; margin-bottom: 20px;"></p>
+                
+                <div class="fund-bar-total">
+                    <div id="modalBar" class="fund-bar-fill"></div>
+                </div>
+                
+                <div style="display: flex; justify-content: space-between; margin-top: 10px;">
+                    <div>
+                        <small style="display: block; color: #94a3b8; font-weight: bold; text-transform: uppercase; font-size: 0.6rem;">Recaudado</small>
+                        <strong id="modalRaised"></strong>
+                    </div>
+                    <div style="text-align: right;">
+                        <small style="display: block; color: #94a3b8; font-weight: bold; text-transform: uppercase; font-size: 0.6rem;">Objetivo</small>
+                        <strong id="modalGoal"></strong>
+                    </div>
+                </div>
+
+                <button class="donate-btn">APOYAR ESTA MISIÓN</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openProject(title, desc, goal, raised, img) {
+            const percent = Math.round((raised / goal) * 100);
+            document.getElementById('modalTitle').innerText = title;
+            document.getElementById('modalDesc').innerText = desc;
+            document.getElementById('modalGoal').innerText = goal.toLocaleString() + " €";
+            document.getElementById('modalRaised').innerText = raised.toLocaleString() + " €";
+            document.getElementById('modalImg').src = img;
+            document.getElementById('modalPercent').innerText = percent + "%";
+            document.getElementById('projectOverlay').style.display = 'flex';
+            setTimeout(() => {
+                document.getElementById('modalBar').style.width = percent + "%";
+            }, 100);
+        }
+
+        function closeProject(e) {
+            if(e.target.id === 'projectOverlay') {
+                document.getElementById('projectOverlay').style.display = 'none';
+                document.getElementById('modalBar').style.width = "0%";
+            }
+        }
+    </script>
+</body>
+</html>
